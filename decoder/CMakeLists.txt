@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.16)
+project(fleetpulse_j1939 C)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+if(MSVC)
+  add_compile_options(/W4 /WX)
+else()
+  add_compile_options(-Wall -Wextra -Wpedantic -Wconversion -Werror)
+endif()
+
+option(J1939_SANITIZE "Build with AddressSanitizer + UndefinedBehaviorSanitizer" OFF)
+if(J1939_SANITIZE AND NOT MSVC)
+  add_compile_options(-fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=all)
+  add_link_options(-fsanitize=address,undefined)
+endif()
+
+# Shared library loaded by the .NET API through P/Invoke (libj1939.so / j1939.dll)
+add_library(j1939 SHARED src/j1939.c)
+target_include_directories(j1939 PUBLIC include)
+if(NOT MSVC)
+  target_link_libraries(j1939 PRIVATE m)
+endif()
+
+add_library(j1939_static STATIC src/j1939.c)
+target_include_directories(j1939_static PUBLIC include)
+
+add_executable(j1939dec src/j1939dec.c)
+target_link_libraries(j1939dec PRIVATE j1939_static)
+
+add_executable(test_j1939 tests/test_j1939.c)
+target_link_libraries(test_j1939 PRIVATE j1939_static)
+if(NOT MSVC)
+  target_link_libraries(j1939dec PRIVATE m)
+  target_link_libraries(test_j1939 PRIVATE m)
+endif()
+
+enable_testing()
+add_test(NAME j1939_unit COMMAND test_j1939)

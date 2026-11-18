@@ -1,0 +1,14 @@
+# generated data and build output
+data/
+decoder/build*/
+api/**/bin/
+api/**/obj/
+analytics/out/
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.angular/
+__pycache__/
+.pytest_cache/
+*.pyc
+.vscode/
+.idea/

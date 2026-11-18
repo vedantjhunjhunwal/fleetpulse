@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <RootNamespace>FleetPulse.Api</RootNamespace>
+    <!-- folder holding libj1939.so / j1939.dll built by decoder/CMakeLists.txt -->
+    <J1939LibDir Condition="'$(J1939LibDir)' == ''">$(MSBuildThisFileDirectory)../../decoder/build</J1939LibDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(J1939LibDir)/libj1939.so" Condition="Exists('$(J1939LibDir)/libj1939.so')" CopyToOutputDirectory="PreserveNewest" Link="libj1939.so" />
+    <None Include="$(J1939LibDir)/libj1939.dylib" Condition="Exists('$(J1939LibDir)/libj1939.dylib')" CopyToOutputDirectory="PreserveNewest" Link="libj1939.dylib" />
+    <None Include="$(J1939LibDir)/Release/j1939.dll" Condition="Exists('$(J1939LibDir)/Release/j1939.dll')" CopyToOutputDirectory="PreserveNewest" Link="j1939.dll" />
+  </ItemGroup>
+
+</Project>

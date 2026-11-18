@@ -1,0 +1,32 @@
+{
+  "truck_days_scored": 1038,
+  "positives": 54,
+  "oof_auc": 0.9994,
+  "failing_trucks": 9,
+  "caught_before_fault": 9,
+  "median_lead_days": 6,
+  "min_lead_days": 5,
+  "lead_days": {
+    "trk03": 7,
+    "trk06": 8,
+    "trk08": 8,
+    "trk10": 6,
+    "trk14": 6,
+    "trk16": 9,
+    "trk19": 5,
+    "trk21": 6,
+    "trk22": 6
+  },
+  "false_alert_episodes": 1,
+  "false_alerts_per_1000_truck_days": 0.96,
+  "false_alert_trucks": "trk07",
+  "coefficients": {
+    "(Intercept)": -6.5316,
+    "coolant_dev": 1.5397,
+    "coolant_slope": 1.2998,
+    "fuelp_dev": -1.3469,
+    "fuelp_slope": -1.2325,
+    "econ_dev_pct": 0.4876
+  },
+  "threshold": 0.0384
+}
